@@ -10,7 +10,7 @@ const statusMeta: Record<string, { color: string; label: string }> = {
 
 export function TasksPanel({ tasks = [], accent = "var(--rust)" }: { tasks?: ETask[]; accent?: string }) {
   return (
-    <Panel title="Futures" subtitle="async tasks" accent={accent} icon="∿"
+    <Panel title="Tasks" subtitle="async work" accent={accent} icon="∿"
            empty={tasks.length === 0} emptyHint="// no tasks scheduled">
       <div className="flex flex-col gap-2">
         <AnimatePresence mode="popLayout">

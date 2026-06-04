@@ -9,6 +9,7 @@ import { messages } from "./elixir/messages";
 import { genserver } from "./elixir/genserver";
 import { supervisors } from "./elixir/supervisors";
 import { elixirAdvancedLessons } from "./elixir/advanced";
+import { phoenixTransportLessons } from "./elixir/phoenix";
 import { compareLessons } from "./compare/systems";
 
 export const lessons: Lesson[] = [
@@ -16,6 +17,7 @@ export const lessons: Lesson[] = [
   processes, messages, genserver, supervisors,
   ...rustAdvancedLessons,
   ...elixirAdvancedLessons,
+  ...phoenixTransportLessons,
   ...compareLessons,
 ];
 

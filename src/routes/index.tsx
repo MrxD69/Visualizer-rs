@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Visualize · Rust & Elixir Runtime" },
-      { name: "description", content: "Interactive step-by-step simulations of Rust ownership, borrowing, async, Elixir processes, mailboxes, GenServers, and cross-system concurrency tradeoffs." },
+      { name: "description", content: "Interactive step-by-step simulations of Rust ownership, Elixir and Phoenix runtime behavior, transport systems, GenServers, channels, and cross-system concurrency tradeoffs." },
     ],
   }),
   component: Index,
@@ -52,7 +52,7 @@ function Index() {
           className="mt-5 text-[15px] text-muted-foreground max-w-[640px] leading-relaxed"
         >
           Not docs. Not slides. A live runtime where Rust's stack, heap, borrow checker, and Elixir's processes,
-          mailboxes, supervisors, and comparison lessons animate together as you press play.
+          mailboxes, supervisors, Phoenix transport flows, and comparison lessons animate together as you press play.
         </motion.p>
 
         <motion.div
@@ -80,6 +80,13 @@ function Index() {
             className="px-4 h-10 inline-flex items-center gap-2 rounded-md text-[13px] font-medium glass hover:bg-[var(--surface-3)] transition-all"
           >
             Or: Compare the Models
+          </Link>
+          <Link
+            to="/lesson/$id"
+            params={{ id: "phoenix-channels-live-vehicle-tracking" }}
+            className="px-4 h-10 inline-flex items-center gap-2 rounded-md text-[13px] font-medium glass hover:bg-[var(--surface-3)] transition-all"
+          >
+            Explore Phoenix Transport
           </Link>
         </motion.div>
       </section>
