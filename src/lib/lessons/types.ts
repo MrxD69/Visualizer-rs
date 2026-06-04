@@ -1,7 +1,7 @@
 // Data model for lessons. Snapshots are declarative — components render from
 // the current step's snapshot and animate via Framer Motion layoutId.
 
-export type Language = "rust" | "elixir";
+export type Language = "rust" | "elixir" | "compare";
 
 export type PanelKind =
   | "stack"
@@ -114,6 +114,12 @@ export interface LessonStep {
   snapshot: Snapshot;
 }
 
+export interface LessonResource {
+  label: string;
+  url: string;
+  note?: string;
+}
+
 export interface Lesson {
   id: string;
   language: Language;
@@ -124,4 +130,5 @@ export interface Lesson {
   code: string;
   panels: PanelKind[];
   steps: LessonStep[];
+  resources?: LessonResource[];
 }

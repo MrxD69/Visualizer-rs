@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Visualize · Rust & Elixir Runtime" },
-      { name: "description", content: "Interactive step-by-step simulations of Rust ownership, borrowing, async, and Elixir processes, mailboxes, GenServers, supervisors." },
+      { name: "description", content: "Interactive step-by-step simulations of Rust ownership, borrowing, async, Elixir processes, mailboxes, GenServers, and cross-system concurrency tradeoffs." },
     ],
   }),
   component: Index,
@@ -52,7 +52,7 @@ function Index() {
           className="mt-5 text-[15px] text-muted-foreground max-w-[640px] leading-relaxed"
         >
           Not docs. Not slides. A live runtime where Rust's stack, heap, borrow checker, and Elixir's processes,
-          mailboxes, and supervisors animate together as you press play.
+          mailboxes, supervisors, and comparison lessons animate together as you press play.
         </motion.p>
 
         <motion.div
@@ -76,20 +76,22 @@ function Index() {
           </Link>
           <Link
             to="/lesson/$id"
-            params={{ id: "elixir-processes" }}
+            params={{ id: "compare-shared-memory-vs-message-passing" }}
             className="px-4 h-10 inline-flex items-center gap-2 rounded-md text-[13px] font-medium glass hover:bg-[var(--surface-3)] transition-all"
           >
-            Or: Elixir Processes
+            Or: Compare the Models
           </Link>
         </motion.div>
       </section>
 
       {/* Catalog */}
       <section className="px-10 pb-20 max-w-[1100px] mx-auto">
-        {(["rust", "elixir"] as const).map((lang, langIdx) => {
+        {(["rust", "elixir", "compare"] as const).map((lang, langIdx) => {
           const meta = lang === "rust"
             ? { color: "var(--rust)", label: "Rust", desc: "Memory & concurrency without GC." }
-            : { color: "var(--elixir)", label: "Elixir", desc: "Actors on the BEAM." };
+            : lang === "elixir"
+              ? { color: "var(--elixir)", label: "Elixir", desc: "Actors on the BEAM." }
+              : { color: "var(--info)", label: "Compare", desc: "Side-by-side concurrency and failure models." };
           const items = lessonsByLanguage(lang);
           return (
             <div key={lang} className="mt-10">

@@ -5,6 +5,7 @@ import { TopBar } from "@/components/TopBar";
 import { CodeViewer } from "@/components/CodeViewer";
 import { SimulationCanvas } from "@/components/SimulationCanvas";
 import { ExplanationPanel } from "@/components/ExplanationPanel";
+import { ResourceLinks } from "@/components/ResourceLinks";
 
 export const Route = createFileRoute("/lesson/$id")({
   loader: ({ params }) => {
@@ -48,6 +49,7 @@ function LessonRoute() {
             total={lesson.steps.length}
             language={lesson.language}
           />
+          <ResourceLinks resources={lesson.resources} language={lesson.language} />
           <SimulationCanvas lesson={lesson} snapshot={step.snapshot} />
         </div>
       </div>

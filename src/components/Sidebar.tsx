@@ -5,6 +5,7 @@ import type { Language } from "@/lib/lessons/types";
 const langMeta: Record<Language, { color: string; label: string; glyph: string }> = {
   rust:   { color: "var(--rust)",   label: "Rust",   glyph: "R" },
   elixir: { color: "var(--elixir)", label: "Elixir", glyph: "E" },
+  compare: { color: "var(--info)", label: "Compare", glyph: "C" },
 };
 
 export function Sidebar() {
@@ -20,12 +21,12 @@ export function Sidebar() {
         </div>
         <div className="flex flex-col leading-tight">
           <span className="text-[13px] font-semibold tracking-tight">Visualize</span>
-          <span className="mono text-[10px] text-muted-foreground tracking-wider">RUST · ELIXIR</span>
+          <span className="mono text-[10px] text-muted-foreground tracking-wider">RUST · ELIXIR · COMPARE</span>
         </div>
       </Link>
 
       <div className="flex-1 overflow-auto p-3 flex flex-col gap-5">
-        {(["rust", "elixir"] as Language[]).map((lang) => {
+        {(["rust", "elixir", "compare"] as Language[]).map((lang) => {
           const groups = groupedByTopic(lang);
           const meta = langMeta[lang];
           return (

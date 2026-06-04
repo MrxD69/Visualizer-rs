@@ -3,7 +3,12 @@ import type { LessonPlayer } from "@/hooks/useLessonPlayer";
 import { Controls } from "./Controls";
 
 export function TopBar({ lesson, player }: { lesson: Lesson; player: LessonPlayer }) {
-  const accent = lesson.language === "rust" ? "var(--rust)" : "var(--elixir)";
+  const accent =
+    lesson.language === "rust"
+      ? "var(--rust)"
+      : lesson.language === "elixir"
+        ? "var(--elixir)"
+        : "var(--info)";
   return (
     <header className="h-[68px] shrink-0 border-b border-border bg-[var(--surface)]/40 backdrop-blur-xl flex items-center px-6 gap-4">
       <div className="flex flex-col leading-tight min-w-0">

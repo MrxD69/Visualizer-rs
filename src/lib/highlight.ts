@@ -1,4 +1,4 @@
-// Tiny token-based highlighter for Rust + Elixir. Good enough to look like an IDE
+// Tiny token-based highlighter for Rust + Elixir (+ compare mode). Good enough to look like an IDE
 // without pulling in a 100KB highlighter. Each token maps to a syntax CSS var.
 
 import type { Language } from "@/lib/lessons/types";
@@ -54,7 +54,7 @@ function tokenize(line: string, lang: Language): Token[] {
         case "atom": cls = "text-[var(--syntax-fn)]"; break;
         case "punct": cls = "text-[var(--syntax-punct)]"; break;
         case "ident": {
-          const set = lang === "rust" ? RUST_KW : ELIXIR_KW;
+          const set = lang === "rust" ? RUST_KW : lang === "elixir" ? ELIXIR_KW : new Set<string>();
           const tyset = lang === "rust" ? RUST_TY : new Set<string>();
           if (set.has(txt)) cls = "text-[var(--syntax-keyword)] font-medium";
           else if (tyset.has(txt)) cls = "text-[var(--syntax-type)]";

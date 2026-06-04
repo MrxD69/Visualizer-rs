@@ -25,7 +25,11 @@ export function CodeViewer({ code, language, activeLines, fileName }: Props) {
   }, [firstActive]);
 
   const accent =
-    language === "rust" ? "var(--rust)" : "var(--elixir)";
+    language === "rust"
+      ? "var(--rust)"
+      : language === "elixir"
+        ? "var(--elixir)"
+        : "var(--info)";
 
   return (
     <div className="glass rounded-xl overflow-hidden flex flex-col h-full">
@@ -37,7 +41,7 @@ export function CodeViewer({ code, language, activeLines, fileName }: Props) {
           <span className="w-2.5 h-2.5 rounded-full bg-[oklch(0.78_0.16_155)]/70" />
         </div>
         <span className="mono text-xs text-muted-foreground tracking-tight">
-          {fileName ?? (language === "rust" ? "main.rs" : "demo.exs")}
+          {fileName ?? (language === "rust" ? "main.rs" : language === "elixir" ? "demo.exs" : "runtime.compare")}
         </span>
         <span className="ml-auto chip">
           <span className="dot" style={{ background: accent }} />

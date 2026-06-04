@@ -15,7 +15,12 @@ interface Props {
 }
 
 export function SimulationCanvas({ lesson, snapshot }: Props) {
-  const accent = lesson.language === "rust" ? "var(--rust)" : "var(--elixir)";
+  const accent =
+    lesson.language === "rust"
+      ? "var(--rust)"
+      : lesson.language === "elixir"
+        ? "var(--elixir)"
+        : "var(--info)";
 
   const renderPanel = (kind: PanelKind) => {
     switch (kind) {
