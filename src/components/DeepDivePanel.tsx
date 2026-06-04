@@ -1,14 +1,15 @@
 import { BookOpenText, Code2, HelpCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { highlight } from "@/lib/highlight";
 import { resolveLessonDeepDive } from "@/lib/lessons/deep-dive";
 import type { Language, Lesson } from "@/lib/lessons/types";
-import { highlight } from "@/lib/highlight";
 
 function renderInline(text: string) {
   const parts: Array<{ type: "text" | "bold" | "code"; text: string }> = [];
   const re = /(\*\*[^*]+\*\*|`[^`]+`)/g;
   let last = 0;
   let match: RegExpExecArray | null;
+
   while ((match = re.exec(text))) {
     if (match.index > last) parts.push({ type: "text", text: text.slice(last, match.index) });
     const token = match[0];
@@ -16,12 +17,13 @@ function renderInline(text: string) {
     else parts.push({ type: "code", text: token.slice(1, -1) });
     last = match.index + token.length;
   }
+
   if (last < text.length) parts.push({ type: "text", text: text.slice(last) });
 
   return parts.map((part, index) => {
     if (part.type === "bold") {
       return (
-        <strong key={index} className="text-foreground font-semibold">
+        <strong key={index} className="font-semibold text-foreground">
           {part.text}
         </strong>
       );
@@ -31,7 +33,7 @@ function renderInline(text: string) {
       return (
         <code
           key={index}
-          className="mono text-[12px] px-1.5 py-0.5 rounded bg-muted text-primary font-medium"
+          className="mono rounded bg-[var(--surface-2)] px-1.5 py-0.5 text-[12px] text-[var(--syntax-fn)]"
         >
           {part.text}
         </code>
@@ -53,53 +55,78 @@ export function DeepDivePanel({ lesson }: { lesson: Lesson }) {
   const highlightedCode = highlight(deepDive.studyCode, lesson.language);
 
   return (
-    <div className="bg-transparent flex flex-col gap-10">
-      <div className="flex flex-col gap-1 px-1">
-        <h2 className="text-[18px] font-bold tracking-tight flex items-center gap-2">
-          Deep Dive
-          <span className="text-[10px] mono font-bold bg-primary/10 text-primary px-2 py-0.5 rounded uppercase tracking-widest">
-            {lesson.language}
-          </span>
-        </h2>
-        <p className="text-[12px] text-muted-foreground/60 leading-relaxed max-w-xl">
-          Richer explanation, academic citations, and step-aware study code for a deeper technical understanding of the runtime behavior.
-        </p>
-      </div>
+    <section className="glass rounded-2xl px-5 py-6 md:px-6 md:py-7">
+      <div className="mx-auto max-w-[1480px] flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h2 className="text-[20px] font-semibold tracking-tight">Deep Dive</h2>
+            <span
+              className="mono rounded px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em]"
+              style={{
+                background: `color-mix(in oklab, ${accent} 14%, transparent)`,
+                color: accent,
+              }}
+            >
+              {lesson.language}
+            </span>
+          </div>
+          <p className="max-w-[760px] text-[13px] leading-relaxed text-muted-foreground">
+            Richer explanation, cited references, and study code for a deeper technical reading of the runtime behavior.
+          </p>
+        </div>
 
-      <div className="flex flex-col gap-12">
-        <section className="bg-transparent">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary">
+        <section className="grid grid-cols-1 2xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] gap-x-14 gap-y-5">
+          <div className="flex items-start gap-3">
+            <div
+              className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
+              style={{ background: `color-mix(in oklab, ${accent} 10%, transparent)`, color: accent }}
+            >
               <BookOpenText size={16} />
             </div>
-            <h3 className="text-[15px] font-bold tracking-tight">Lesson Overview</h3>
+            <div className="min-w-0">
+              <div className="mb-3 text-[15px] font-semibold tracking-tight">Lesson Overview</div>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-10 gap-y-4">
+                {deepDive.summary.map((paragraph, index) => (
+                  <p
+                    key={index}
+                    className="max-w-[68ch] border-l pl-4 text-[14px] leading-7 text-foreground/88"
+                    style={{ borderColor: `color-mix(in oklab, ${accent} 20%, transparent)` }}
+                  >
+                    {renderInline(paragraph)}
+                  </p>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-[13.5px] leading-relaxed text-foreground/90">
-            {deepDive.summary.map((paragraph, index) => (
-              <p key={index} className="pl-5 border-l-2 border-primary/20 italic">
-                {renderInline(paragraph)}
-              </p>
-            ))}
+
+          <div className="2xl:pl-2">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground/70 mono">
+              How To Use This
+            </div>
+            <p className="mt-2 max-w-[42ch] text-[13px] leading-6 text-muted-foreground">
+              Read the overview first, step through the runtime view, then use the annotated code and prompts to connect the visuals back to real production code.
+            </p>
           </div>
         </section>
 
-        <div className="grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-x-12 gap-y-10">
-          <div className="space-y-10">
+        <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.85fr)] gap-x-14 gap-y-10">
+          <div className="flex flex-col gap-8">
             {deepDive.sections.map((section, index) => (
               <motion.section
                 key={section.title}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="group"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.24, delay: index * 0.04 }}
+                className="border-t border-border/80 pt-5 first:border-t-0 first:pt-0"
               >
-                <div className="flex items-center gap-2 flex-wrap mb-3.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
-                  <span className="text-[14px] font-bold group-hover:text-primary transition-colors">
-                    {section.title}
-                  </span>
+                <div className="mb-3 flex items-center gap-2 flex-wrap">
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ background: accent }}
+                  />
+                  <h3 className="text-[15px] font-semibold tracking-tight">{section.title}</h3>
                   {section.citations && section.citations.length > 0 && (
-                    <div className="flex items-center gap-1.5 ml-1">
+                    <div className="ml-1 flex items-center gap-1.5">
                       {section.citations.map((citation) => {
                         const resource = resources[citation - 1];
                         if (!resource) return null;
@@ -109,7 +136,11 @@ export function DeepDivePanel({ lesson }: { lesson: Lesson }) {
                             href={resource.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="mono text-[9px] px-1.5 py-0.5 rounded bg-muted/50 border border-border/20 hover:border-primary/50 transition-all text-muted-foreground hover:text-primary"
+                            className="mono rounded border border-border px-1.5 py-0.5 text-[10px] text-muted-foreground transition-colors hover:text-foreground"
+                            style={{
+                              background: `color-mix(in oklab, ${accent} 8%, transparent)`,
+                              borderColor: `color-mix(in oklab, ${accent} 16%, var(--border))`,
+                            }}
                             title={resource.label}
                           >
                             [{citation}]
@@ -119,70 +150,90 @@ export function DeepDivePanel({ lesson }: { lesson: Lesson }) {
                     </div>
                   )}
                 </div>
-                <div className="pl-4 flex flex-col gap-3.5 text-[13px] leading-relaxed text-foreground/80">
+                <div className="flex flex-col gap-3 text-[14px] leading-7 text-foreground/84">
                   {section.body.map((paragraph, bodyIndex) => (
-                    <p key={bodyIndex}>{renderInline(paragraph)}</p>
+                    <p key={bodyIndex} className="max-w-[74ch]">
+                      {renderInline(paragraph)}
+                    </p>
                   ))}
                 </div>
               </motion.section>
             ))}
           </div>
 
-          <div className="flex flex-col gap-10">
-            <section className="bg-transparent">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary">
+          <aside className="flex flex-col gap-8 xl:sticky xl:top-4 self-start">
+            <section>
+              <div className="mb-4 flex items-center gap-3">
+                <div
+                  className="flex h-9 w-9 items-center justify-center rounded-xl"
+                  style={{ background: `color-mix(in oklab, ${accent} 10%, transparent)`, color: accent }}
+                >
                   <Code2 size={16} />
                 </div>
-                <span className="text-[15px] font-bold tracking-tight">{deepDive.studyCodeLabel}</span>
+                <div>
+                  <div className="text-[15px] font-semibold tracking-tight">{deepDive.studyCodeLabel}</div>
+                  <div className="mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground/70">
+                    Step-aware study code
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-4">
-                <div className="mono text-[11px] text-muted-foreground/60 leading-relaxed px-1">
-                  Step-aware annotations ensure the code and simulation stay tied together during execution.
-                </div>
-                <div className="rounded-2xl bg-muted/30 border border-border/40 p-5 overflow-hidden">
-                  <pre className="overflow-auto mono text-[12px] leading-[1.7] whitespace-pre">
-                    {highlightedCode.map((line, lineIdx) => (
-                      <div key={lineIdx} className="flex">
-                        <span className="w-6 shrink-0 text-[10px] text-muted-foreground/30 select-none">{lineIdx + 1}</span>
-                        <div className="flex-1">
-                          {line.map((token, tokenIdx) => (
-                            <span key={tokenIdx} className={token.cls}>
-                              {token.text}
-                            </span>
-                          ))}
-                        </div>
+              <p className="mb-4 max-w-[42ch] text-[12.5px] leading-6 text-muted-foreground">
+                The annotations below keep the code synchronized with the simulation so you can reread the example without losing the runtime story.
+              </p>
+              <div className="overflow-hidden rounded-2xl border border-border bg-[var(--surface-2)]/35">
+                <pre className="overflow-auto p-4 mono text-[12px] leading-[1.75] whitespace-pre">
+                  {highlightedCode.map((line, lineIdx) => (
+                    <div key={lineIdx} className="flex">
+                      <span className="w-7 shrink-0 select-none text-[10px] text-muted-foreground/35">
+                        {lineIdx + 1}
+                      </span>
+                      <div className="flex-1">
+                        {line.map((token, tokenIdx) => (
+                          <span key={tokenIdx} className={token.cls}>
+                            {token.text}
+                          </span>
+                        ))}
                       </div>
-                    ))}
-                  </pre>
-                </div>
+                    </div>
+                  ))}
+                </pre>
               </div>
             </section>
 
-            <section className="bg-transparent">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary">
+            <section>
+              <div className="mb-4 flex items-center gap-3">
+                <div
+                  className="flex h-9 w-9 items-center justify-center rounded-xl"
+                  style={{ background: `color-mix(in oklab, ${accent} 10%, transparent)`, color: accent }}
+                >
                   <HelpCircle size={16} />
                 </div>
-                <span className="text-[15px] font-bold tracking-tight">Study Prompts</span>
+                <div>
+                  <div className="text-[15px] font-semibold tracking-tight">Study Prompts</div>
+                  <div className="mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground/70">
+                    Think past the happy path
+                  </div>
+                </div>
               </div>
-              <div className="grid gap-3">
+              <div className="flex flex-col gap-3">
                 {deepDive.studyPrompts.map((prompt, index) => (
-                  <div 
-                    key={index} 
-                    className="relative p-4 rounded-xl bg-muted/20 border border-border/20 text-[12.5px] leading-relaxed text-foreground/85 hover:border-primary/30 transition-colors"
+                  <div
+                    key={index}
+                    className="rounded-xl border border-border bg-[var(--surface-2)]/20 px-4 py-3 text-[13px] leading-6 text-foreground/84"
                   >
                     <div className="flex gap-3">
-                      <span className="text-primary font-bold">?</span>
+                      <span className="mono font-semibold" style={{ color: accent }}>
+                        ?
+                      </span>
                       <div className="flex-1">{renderInline(prompt)}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </section>
-          </div>
+          </aside>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

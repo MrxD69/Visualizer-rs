@@ -33,24 +33,29 @@ function LessonRoute() {
   return (
     <>
       <TopBar lesson={lesson} player={player} />
-      <div className="flex-1 min-h-0 overflow-hidden flex">
-        {/* Left: Code */}
-        <div className="w-[42%] min-w-[380px] p-4 pr-2 overflow-hidden flex flex-col">
-          <CodeViewer
-            code={lesson.code}
-            language={lesson.language}
-            activeLines={step.lines}
-          />
+      <div className="flex-1 min-h-0 overflow-auto flex flex-col">
+        <div className="flex min-h-[760px] shrink-0">
+          {/* Left: Code */}
+          <div className="w-[42%] min-w-[380px] p-4 pr-2 overflow-hidden flex flex-col">
+            <CodeViewer
+              code={lesson.code}
+              language={lesson.language}
+              activeLines={step.lines}
+            />
+          </div>
+          {/* Right: Simulation + Explanation */}
+          <div className="flex-1 p-4 pl-2 flex flex-col gap-3">
+            <ExplanationPanel
+              step={step}
+              index={player.stepIndex}
+              total={lesson.steps.length}
+              language={lesson.language}
+            />
+            <SimulationCanvas lesson={lesson} snapshot={step.snapshot} />
+          </div>
         </div>
-        {/* Right: Simulation + Explanation */}
-        <div className="flex-1 overflow-auto p-4 pl-2 flex flex-col gap-3">
-          <ExplanationPanel
-            step={step}
-            index={player.stepIndex}
-            total={lesson.steps.length}
-            language={lesson.language}
-          />
-          <SimulationCanvas lesson={lesson} snapshot={step.snapshot} />
+
+        <div className="px-4 pb-4 pt-2 flex flex-col gap-4">
           <DeepDivePanel lesson={lesson} />
           <ResourceLinks resources={lesson.resources} language={lesson.language} />
         </div>
