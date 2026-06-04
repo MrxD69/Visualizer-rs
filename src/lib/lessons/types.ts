@@ -120,6 +120,19 @@ export interface LessonResource {
   note?: string;
 }
 
+export interface LessonDeepDiveSection {
+  title: string;
+  body: string[];
+  citations?: number[];   // 1-based resource indexes
+}
+
+export interface LessonDeepDive {
+  summary?: string[];
+  sections?: LessonDeepDiveSection[];
+  studyPrompts?: string[];
+  extendedCode?: string;
+}
+
 export interface Lesson {
   id: string;
   language: Language;
@@ -131,4 +144,5 @@ export interface Lesson {
   panels: PanelKind[];
   steps: LessonStep[];
   resources?: LessonResource[];
+  deepDive?: LessonDeepDive;
 }
