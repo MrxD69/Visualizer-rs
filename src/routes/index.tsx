@@ -24,8 +24,7 @@ function Index() {
           transition={{ duration: 0.5 }}
           className="flex items-center gap-2 mb-6"
         >
-          <span className="chip">
-            <span className="dot" style={{ background: "var(--ok)" }} />
+          <span className="text-[10px] mono font-bold bg-primary/10 text-primary px-2 py-0.5 rounded uppercase tracking-widest">
             v0.1 · runtime simulator
           </span>
         </motion.div>

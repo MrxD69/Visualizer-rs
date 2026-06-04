@@ -111,10 +111,10 @@
   --sidebar-ring: oklch(0.7731 0 0);
 
   /* Compatibility Mapping - Dark */
-  --surface: var(--sidebar);
-  --surface-2: var(--secondary);
-  --surface-3: var(--muted);
-  --border-strong: var(--input);
+  --surface: oklch(0.22 0.01 106);
+  --surface-2: oklch(0.24 0.01 106);
+  --surface-3: oklch(0.28 0.01 106);
+  --border-strong: var(--border);
   --ok: oklch(0.78 0.16 155);
   --warn: oklch(0.82 0.16 85);
   --err: var(--destructive);
@@ -228,19 +228,21 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--background);
-  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--foreground) 5%, transparent);
+  font-size: 0.65rem;
   font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--muted-foreground);
 }
 
 @utility dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
   display: inline-block;
 }
 

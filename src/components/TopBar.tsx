@@ -35,15 +35,16 @@ export function TopBar({ lesson, player }: { lesson: Lesson; player: LessonPlaye
     <header className="h-[68px] shrink-0 border-b border-border bg-[var(--surface)]/40 backdrop-blur-xl flex items-center px-6 gap-4">
       <div className="flex flex-col leading-tight min-w-0">
         <div className="flex items-center gap-2">
-          <span className="mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          <span className="mono text-[10px] uppercase tracking-wider text-muted-foreground/50">
             {lesson.topic}
           </span>
-          <span className="text-muted-foreground/40">·</span>
-          <span className="chip" style={{ color: accent, borderColor: `color-mix(in oklab, ${accent} 35%, transparent)` }}>
-            <span className="dot" style={{ background: accent }} />
+          <span className="text-muted-foreground/20">·</span>
+          <span className="text-[10px] mono font-bold bg-primary/10 text-primary px-2 py-0.5 rounded uppercase tracking-widest">
             {lesson.language}
           </span>
-          <span className="chip">{lesson.difficulty}</span>
+          <span className="text-[10px] mono font-bold bg-muted text-muted-foreground/60 px-2 py-0.5 rounded uppercase tracking-widest">
+            {lesson.difficulty}
+          </span>
         </div>
         <h1 className="text-[16px] font-semibold tracking-tight truncate">{lesson.title}</h1>
       </div>
