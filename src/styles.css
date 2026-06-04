@@ -1,0 +1,193 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-rust: var(--rust);
+  --color-rust-soft: var(--rust-soft);
+  --color-elixir: var(--elixir);
+  --color-elixir-soft: var(--elixir-soft);
+
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-err: var(--err);
+  --color-info: var(--info);
+
+  --color-syntax-keyword: var(--syntax-keyword);
+  --color-syntax-string: var(--syntax-string);
+  --color-syntax-number: var(--syntax-number);
+  --color-syntax-comment: var(--syntax-comment);
+  --color-syntax-fn: var(--syntax-fn);
+  --color-syntax-type: var(--syntax-type);
+  --color-syntax-punct: var(--syntax-punct);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Dark-first palette (we apply .dark by default on <html>) */
+  --background: oklch(0.16 0.012 260);
+  --foreground: oklch(0.96 0.005 250);
+  --surface: oklch(0.19 0.013 260);
+  --surface-2: oklch(0.22 0.014 260);
+  --surface-3: oklch(0.26 0.015 260);
+
+  --card: oklch(0.20 0.013 260);
+  --card-foreground: oklch(0.96 0.005 250);
+  --popover: oklch(0.22 0.014 260);
+  --popover-foreground: oklch(0.96 0.005 250);
+
+  --primary: oklch(0.78 0.14 60);
+  --primary-foreground: oklch(0.16 0.01 260);
+  --secondary: oklch(0.26 0.015 260);
+  --secondary-foreground: oklch(0.96 0.005 250);
+  --muted: oklch(0.24 0.013 260);
+  --muted-foreground: oklch(0.66 0.02 260);
+  --accent: oklch(0.30 0.02 260);
+  --accent-foreground: oklch(0.96 0.005 250);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 250);
+
+  --border: oklch(1 0 0 / 8%);
+  --border-strong: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.78 0.14 60);
+
+  --rust: oklch(0.74 0.17 50);
+  --rust-soft: oklch(0.74 0.17 50 / 18%);
+  --elixir: oklch(0.72 0.18 305);
+  --elixir-soft: oklch(0.72 0.18 305 / 18%);
+
+  --ok: oklch(0.78 0.16 155);
+  --warn: oklch(0.82 0.16 85);
+  --err: oklch(0.7 0.22 25);
+  --info: oklch(0.74 0.13 230);
+
+  --syntax-keyword: oklch(0.78 0.16 320);
+  --syntax-string: oklch(0.82 0.15 140);
+  --syntax-number: oklch(0.82 0.14 70);
+  --syntax-comment: oklch(0.55 0.02 260);
+  --syntax-fn: oklch(0.82 0.13 220);
+  --syntax-type: oklch(0.82 0.13 50);
+  --syntax-punct: oklch(0.75 0.01 260);
+}
+
+.dark {
+  --background: oklch(0.16 0.012 260);
+  --foreground: oklch(0.96 0.005 250);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html, body, #root { height: 100%; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01", "ss03";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, oklch(0.74 0.17 50 / 6%), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, oklch(0.72 0.18 305 / 6%), transparent 60%);
+    background-attachment: fixed;
+  }
+  code, pre, .mono { font-family: var(--font-mono); }
+  ::selection { background: oklch(0.78 0.14 60 / 35%); }
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 70%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--border);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, var(--surface-2) 80%, transparent);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--border-strong);
+}
+
+@utility hairline {
+  border: 1px solid var(--border);
+}
+
+@utility panel-title {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+}
+
+@utility dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+/* Custom scrollbar */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: oklch(1 0 0 / 8%); border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: oklch(1 0 0 / 14%); }
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  50% { box-shadow: 0 0 0 6px transparent; opacity: 0.6; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
