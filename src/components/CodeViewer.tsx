@@ -77,16 +77,17 @@ export function CodeViewer({ code, language, activeLines, fileName }: Props) {
               <motion.div
                 animate={{
                   backgroundColor: isActive
-                    ? `color-mix(in oklab, ${accent} 12%, transparent)`
+                    ? `color-mix(in oklab, ${accent} 22%, transparent)`
                     : "transparent",
+                  borderLeft: isActive ? `3px solid ${accent}` : "3px solid transparent",
                 }}
                 transition={{ duration: 0.25 }}
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0 pointer-events-none z-0"
               />
-              <span className="relative w-10 shrink-0 text-right pr-3 mono text-[11px] text-muted-foreground/70 select-none">
+              <span className="relative w-10 shrink-0 text-right pr-3 mono text-[11px] text-muted-foreground/70 select-none z-10">
                 {lineNo}
               </span>
-              <pre className="relative mono whitespace-pre flex-1">
+              <pre className="relative mono whitespace-pre flex-1 z-10">
                 {tokens.length === 0 ? (
                   <span> </span>
                 ) : (

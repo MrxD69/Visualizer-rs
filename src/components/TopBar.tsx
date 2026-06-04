@@ -2,7 +2,29 @@ import type { Lesson } from "@/lib/lessons/types";
 import type { LessonPlayer } from "@/hooks/useLessonPlayer";
 import { Controls } from "./Controls";
 
+import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
+
 export function TopBar({ lesson, player }: { lesson: Lesson; player: LessonPlayer }) {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const isDarkMode = document.body.classList.contains("dark");
+    setIsDark(isDarkMode);
+  }, []);
+
+  const toggleTheme = () => {
+    const newDark = !isDark;
+    setIsDark(newDark);
+    if (newDark) {
+      document.body.classList.add("dark");
+      document.body.classList.remove("light");
+    } else {
+      document.body.classList.remove("dark");
+      document.body.classList.add("light");
+    }
+  };
+
   const accent =
     lesson.language === "rust"
       ? "var(--rust)"
@@ -26,7 +48,14 @@ export function TopBar({ lesson, player }: { lesson: Lesson; player: LessonPlaye
         <h1 className="text-[16px] font-semibold tracking-tight truncate">{lesson.title}</h1>
       </div>
 
-      <div className="ml-auto">
+      <div className="ml-auto flex items-center gap-4">
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-md border border-border bg-[var(--surface-2)]/50 hover:bg-[var(--surface-3)] transition-colors text-muted-foreground hover:text-foreground"
+          title="Toggle theme"
+        >
+          {isDark ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
         <Controls player={player} accent={accent} />
       </div>
     </header>
