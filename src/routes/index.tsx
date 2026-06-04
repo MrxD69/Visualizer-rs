@@ -126,30 +126,26 @@ function Index() {
                     <Link
                       to="/lesson/$id"
                       params={{ id: l.id }}
-                      className="block glass rounded-xl p-4 group hover:bg-[var(--surface-2)]/70 transition-all relative overflow-hidden"
+                      className="block rounded-xl p-5 group transition-all relative border border-transparent hover:border-border hover:bg-muted/30 active:scale-[0.985]"
                     >
-                      <div
-                        className="absolute inset-y-0 left-0 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ background: meta.color }}
-                      />
-                      <div className="flex items-start gap-3">
+                      <div className="flex items-start gap-4">
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1.5">
-                            <span className="mono text-[10px] uppercase tracking-wider text-muted-foreground">{l.topic}</span>
-                            <span className="chip">{l.difficulty}</span>
-                            <span className="ml-auto mono text-[10px] text-muted-foreground">{l.steps.length} steps</span>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="mono text-[10px] uppercase tracking-wider text-muted-foreground/60">{l.topic}</span>
+                            <span className="text-[10px] px-2 py-0.5 rounded-full border border-border/50 font-medium text-muted-foreground">{l.difficulty}</span>
+                            <span className="ml-auto mono text-[10px] text-muted-foreground/40">{l.steps.length} steps</span>
                           </div>
-                          <h3 className="text-[14px] font-semibold tracking-tight">{l.title}</h3>
-                          <p className="mt-1 text-[12.5px] text-muted-foreground leading-snug">{l.subtitle}</p>
-                          <div className="mt-3 flex flex-wrap gap-1">
+                          <h3 className="text-[15px] font-bold tracking-tight mb-1">{l.title}</h3>
+                          <p className="text-[13px] text-muted-foreground/80 leading-relaxed">{l.subtitle}</p>
+                          <div className="mt-4 flex flex-wrap gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
                             {l.panels.map((p) => (
-                              <span key={p} className="chip text-[10px]" style={{
-                                borderColor: `color-mix(in oklab, ${meta.color} 25%, transparent)`,
-                              }}>{p}</span>
+                              <span key={p} className="text-[10px] px-2 py-0.5 rounded bg-muted text-muted-foreground mono">{p}</span>
                             ))}
                           </div>
                         </div>
-                        <ArrowUpRight size={16} className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                        <div className="mt-6 p-2 rounded-full bg-muted/50 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                          <ArrowUpRight size={14} />
+                        </div>
                       </div>
                     </Link>
                   </motion.div>
